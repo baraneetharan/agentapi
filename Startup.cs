@@ -33,10 +33,12 @@ namespace agentapi
             services.AddDbContext<AgentContext>(opt =>
                                                opt.UseInMemoryDatabase("AgentList"));
             
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "agentapi", Version = "v1" });
-            });
+            services.AddOpenApiDocument();
+
+            // services.AddSwaggerGen(c =>
+            // {
+            //     c.SwaggerDoc("v1", new OpenApiInfo { Title = "agentapi", Version = "v1" });
+            // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,8 +47,8 @@ namespace agentapi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "agentapi v1"));
+                // app.UseSwagger();
+                // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "agentapi v1"));
             }
 
             app.UseHttpsRedirection();
@@ -59,6 +61,8 @@ namespace agentapi
             {
                 endpoints.MapControllers();
             });
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
         }
     }
 }
